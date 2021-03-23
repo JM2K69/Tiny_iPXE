@@ -36,4 +36,5 @@ set boot-url http://${next-server}:8080
 
 # Contribution
 
-![Tweet](https://twitter.com/ipxe/status/1362179198979366919?s=20)
+
+tweet_embed(tweet_url("ipxe", "1362179198979366919"))

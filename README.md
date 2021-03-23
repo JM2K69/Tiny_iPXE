@@ -37,7 +37,9 @@ set boot-url http://${next-server}:8080
 # Main application
 
 
-![Auhtors_img](/Resources/Tweet.PNG)
+![Auhtors_img](/Resources/img/TinyIPXE_GUI.PNG)
+
+Here there is the main panel and the only panel to configure Tiny Ipxe Server.
 
 # Contribution
 

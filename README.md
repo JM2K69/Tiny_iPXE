@@ -34,7 +34,13 @@ set boot-url http://${next-server}:8080
  echo Unknown platform ${platform}_${buildarch}
 ```
 
+# Main application
+
+
+![Auhtors_img](/Resources/Tweet.PNG)
+
 # Contribution
 
 
-tweet_embed(tweet_url("ipxe", "1362179198979366919"))
+
+![Auhtors_img](/Resources/Tweet2.PNG)

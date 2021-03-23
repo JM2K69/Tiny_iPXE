@@ -1,0 +1,63 @@
+#!ipxe
+
+set boot-url http://${next-server}:8080
+set menu-timeout 5000
+set submenu-timeout ${menu-timeout}
+
+isset ${menu-default} || set menu-default exit
+cpuid --ext 29 && set arch x64 || set arch x86
+
+goto Konsole_${platform}_${buildarch} || goto unknown2
+
+:Konsole_efi_x86_64
+console --picture ${boot-url}/menu.png 
+
+:Konsole_pcbios_i386
+echo No console available now
+console --picture ${boot-url}/menu.png 
+
+:unknown2
+goto start
+
+######## MAIN MENU ###################
+:start
+menu IPXE @JM2K69 for PSD
+item
+item --gap -- ------------------------- PSD Boot ------------------------------------------
+item wimboot Boot  HTTP for PSD x64
+item wimboot2 Boot HTTP MDT x64
+item exit       Exit 
+item --gap -- ------------------------------ Advanced -------------------------------------
+item config       Configure settings
+item shell      Enter iPXE shell
+item reboot     Reboot
+choose --default wimboot --timeout 30000 target && goto ${target}
+
+:wimboot
+ cpuid --ext 29 && set arch x64 || set arch x86
+  kernel ${boot-url}/wimboot quiet
+  initrd ${boot-url}/BOOT/BCD         BCD
+  initrd ${boot-url}/BOOT/BOOT.SDI    BOOT.SDI
+  initrd ${boot-url}/SOURCES/PSD/${buildarch}/BOOT.WIM BOOT.WIM
+  boot
+  
+:wimboot2
+ cpuid --ext 29 && set arch x64 || set arch x86
+  kernel ${boot-url}/wimboot quiet
+  initrd ${boot-url}/BOOT/BCD         BCD
+  initrd ${boot-url}/BOOT/BOOT.SDI    BOOT.SDI
+  initrd ${boot-url}/SOURCES/MDT/${buildarch}/BOOT.WIM BOOT.WIM
+  boot
+
+:reboot
+reboot
+
+:config
+config
+goto start
+
+:shell
+echo Type exit to get the back to the menu
+shell
+set menu-timeout 0
+goto start
